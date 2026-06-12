@@ -32,7 +32,7 @@ class CalculatorTest extends TestCase
         $result = $this->calculator->add($a, $b);
 
         // Assert
-        $this->assertEquals(9, $result); // FOUT: 5 + 3 = 8
+        $this->assertEquals(8, $result);
     }
 
     public function testAddWithNegativeNumbers()
