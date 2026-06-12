@@ -5,16 +5,16 @@ on:
     branches:
       - main
 
-  jobs:
-    build-test:
-      runs-on: ubuntu-latest
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
 
-      steps:
-        # 1. haal de code
-      - name: checkout code
+    steps:
+      # 1. haal de code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-        # 2. PHP instellen
+      # 2. PHP instellen
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -22,22 +22,20 @@ on:
           tools: composer
           coverage: none
 
-        # 3. Dependencies installeren
+      # 3. Dependencies installeren
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
-        # 4. Tests draaien (CI) + output naar bestand
+      # 4. Tests draaien
       - name: Run tests
         run: |
           mkdir -p test-results
           composer test -- --log-junit test-results/junit.xml
-        
-        # 5. Upload testresultaten als artifact
+
+      # 5. Upload testresultaten
       - name: Upload test results
-        if: always() # ook uploaden als tests falen
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: test-results
-
-
